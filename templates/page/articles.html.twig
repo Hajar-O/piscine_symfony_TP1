@@ -1,8 +1,11 @@
 <h1>Articles list</h1>
+<section>
 
-{% for pokemon in pokemons %}
-    {{ pokemon.title }} <br>
-    {{ pokemon.content }} <br>
-    
+    {% for pokemon in pokemons %}
+        <article>
+            <p>{{ pokemon.title }}</p> <br>
+            <p>{{ pokemon.content }}</p> <br>
+        </article>
 
-{% endfor %}
+    {% endfor %}
+</section>
