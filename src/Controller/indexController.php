@@ -15,7 +15,7 @@ class indexController extends AbstractController
     #[Route('/', name: 'home')]
 
     public function index(){
-        var_dump(value: "Hello");die;
+         return $this->render('page/index.html.twig');
 
     }
 }
