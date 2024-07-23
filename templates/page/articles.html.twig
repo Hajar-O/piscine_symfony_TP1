@@ -1,11 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block content %}
 <h1>Articles list</h1>
-<section>
+<section class="allArticle">
 
     {% for pokemon in pokemons %}
-        <article>
-            <p>{{ pokemon.title }}</p> <br>
-            <p>{{ pokemon.content }}</p> <br>
-        </article>
 
+        {% if pokemon.isPublished == true %}
+
+        <article class="myArticle">
+            <h2>{{ pokemon.title }}</h2>
+            <p>{{ pokemon.content }}</p>
+        </article>
+    {% endif %}
     {% endfor %}
 </section>
+
+{% endblock %}
