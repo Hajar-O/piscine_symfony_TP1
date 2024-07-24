@@ -5,11 +5,19 @@
 }
 /*-----------HEADER-------------*/
 .header{
-    background-color: #B0413E;
-
+    background-image: url('../img/pokemon_2.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     h2{
         text-align: center;
        padding: 20px;
+        font-family: "Anton SC";
+        color: black;
     }
 
     img{
@@ -26,14 +34,26 @@
         display: flex;
         justify-content: center;
         gap: 25px;
+
     }
     .nav_header li{
         list-style: none;
         margin: 20px;
-
+        background-color: rgba(0, 0, 0, 0.51);
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        transition: all 1s ease;
+        &&:hover{
+            background-color: rgba(0, 0, 0);
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
     }
 }
-/*------------MAIN---------------*/
+/*------------MAIN-Articles---------------*/
 .allArticle{
     display: flex;
     justify-content: center;
@@ -49,9 +69,19 @@
     padding: 10px;
     &&:hover{
         background-color: #b47471;
-
     }
+}
+img{
+    width: 100%;
+}
+.img_poke{
+    width: 40%;
+}
 
+/*-----------MAIN-Category------*/
+
+#h3Category{
+    text-align: center;
 }
 /*-----------FOOTER-------------*/
 .footer{

@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
+{% block meta_title %}
+    Pokemon : Articles
+{% endblock meta_title %}
 {% block content %}
+
+
+
 <h1>Articles list</h1>
+
+
 <section class="allArticle">
 
     {% for pokemon in pokemons %}
@@ -9,7 +17,11 @@
 
         <article class="myArticle">
             <h2>{{ pokemon.title }}</h2>
-            <p>{{ pokemon.content }}</p>
+            <p>{{ pokemon.id }}</p>
+            <a href="http://localhost:8888/piscine-blog-symfony/public/show-pokemon?id={{ pokemon.id }}">Voir l'article</a><br>
+
+
+
         </article>
     {% endif %}
     {% endfor %}
