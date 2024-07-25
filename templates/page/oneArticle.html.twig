@@ -3,6 +3,12 @@
     Pokemon : {{ pokemon.title }}
 {% endblock meta_title %}
 {% block content %}
-    <h1>{{ pokemon.title }}</h1>
-    <p>{{ pokemon.content }}</p>
+
+    <article class="show_art">
+        <h1>{{ pokemon.title }}</h1>
+        <p>{{ pokemon.content }}</p>
+        <img src="{{ asset(pokemon.img) }}" alt="">
+    </article>
+
+
 {% endblock %}

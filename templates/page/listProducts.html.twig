@@ -1,0 +1,7 @@
+
+{% for product in products %}
+<h2>{{ product.title }}</h2>
+    <p>{{ product.price_reduction  }}</p>
+    <a href="{{ path('show-product',{idProduct: product.id}) }}">Voir le produit</a><br>
+
+{% endfor %}
