@@ -6,6 +6,7 @@ namespace App\Controller;
 
 // On appelle le namespace des class utilisées afin que Symfony fasse le require de ces dernières.
 
+use App\Repository\PokemonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -138,6 +139,49 @@ private array $pokemons;
             'pokemon' => $pokemonFound
         ]);
     }
+
+#[Route('/pokemon-bdd', name: 'pokemon_bdd')]
+public function showPokemonBdd(PokemonRepository $pokemonRepository): Response{
+
+        $pokemons= $pokemonRepository->findAll();
+
+    return $this->render('page/list_pokemon_bdd.html.twig', [
+        'pokemons' => $pokemons
+        ]);
+
+}
+#[Route('/show-pokemon-bdd/{id}', name: 'show_pokemon_bdd')]
+public function showPokemonById(int$id,PokemonRepository $pokemonRepository ): Response{
+        $pokemon = $pokemonRepository->find($id);
+
+        return $this->render('page/pokemonShowId.html.twig', [
+            'pokemon' => $pokemon
+        ]);
+}
+
+#[Route('/found-pokemon-bdd', name: 'found_pokemon_bdd')]
+public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonRepository ): Response{
+        $pokemonFound=null;
+
+    if($request->request->has('title')){
+        // je recupère les donnérs poste du title dans search
+            $search = $request->request->get('title');
+
+        //je stock dans la variable $pokemonFound la recherche de l'utiliateur si Pokemon existant dans la bdd.
+            $pokemonFound = $pokemonRepository->findOneBy(['title' => $search]);
+        // si pas de pokemon dans $pokemonFound alors je génère une page 404 à la main.
+
+            if(!$pokemonFound){
+                $html = $this->renderView('page/pokemon_not_found.html.twig');
+                    return new Response($html,404);
+             }
+
+    }
+
+       return $this->render('page/search_pokemon.html.twig', [
+            'pokemon' => $pokemonFound
+        ]);
+}
 
 
 }

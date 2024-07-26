@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block meta_title %}
+    Pokemon
+{% endblock meta_title %}
+{% block content %}
+<section class="allArticle">
+
+    {% for pokemon in pokemons %}
+
+        <article class="myArticle">
+            <h1 class="h1_pokemon">{{ pokemon.title }}</h1>
+            {# <p>{{ pokemon.description }}</p> #}
+            {# <p>{{ pokemon.type }}</p> #}
+            <a href="{{ path("show_pokemon_bdd",{id: pokemon.id}) }}">Voir le detail</a>
+
+            <div class="img_poke">
+                <img src="{{ pokemon.image }}" alt="">
+            </div>
+        </article>
+
+    {% endfor %}
+</section>
+
+{% endblock %}

@@ -2,7 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
 }
+
 /*-----------HEADER-------------*/
 .header{
     background-image: url('../img/pokemon_2.jpeg');
@@ -97,8 +100,16 @@ img{
     width: 100%;
 }
 .img_poke{
-    width: 40%;
+    width: 60%;
+    margin: auto;
 }
+/*-----------MAIN-list-pokemon-bdd------*/
+.h1_pokemon{
+    font-family: "Anton CS";
+    font-size: 30px;
+    padding: 20px;
+}
+
 /*-----------MAIN-Show_article------*/
 
 .show_art{
@@ -110,6 +121,17 @@ img{
     padding: 30px;
     margin-top: 50px;
     margin-bottom: 50px;
+
+    p{
+        margin: 20px;
+    }
+    a{
+        list-style: none;
+        color: #cccccc;
+        background-color: #B0413E;
+        border-radius: 10px;
+        padding: 10px;
+    }
 
 }
 /*-----------MAIN-Category------*/
