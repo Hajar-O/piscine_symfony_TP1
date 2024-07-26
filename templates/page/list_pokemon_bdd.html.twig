@@ -11,11 +11,13 @@
             <h1 class="h1_pokemon">{{ pokemon.title }}</h1>
             {# <p>{{ pokemon.description }}</p> #}
             {# <p>{{ pokemon.type }}</p> #}
-            <a href="{{ path("show_pokemon_bdd",{id: pokemon.id}) }}">Voir le detail</a>
+
 
             <div class="img_poke">
                 <img src="{{ pokemon.image }}" alt="">
             </div>
+            <a href="{{ path("show_pokemon_bdd",{id: pokemon.id}) }}">Voir le detail</a>
+            <a href="{{ path("delete_pokemon_bdd",{id: pokemon.id}) }}">Supprimer le pokemon</a>
         </article>
 
     {% endfor %}

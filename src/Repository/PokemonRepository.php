@@ -22,6 +22,7 @@ class PokemonRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('pokemon');
 
         $query = $queryBuilder->select('pokemon')
+            //Where = condition --> récupère tous les pokemons à condition qu'elle soit LIKE la recherche $search
             //On sécuriste avec :search pour éviter les injections SQL.
             ->where('pokemon.title LIKE :search')
             //On programme les paramètres de recherche.
@@ -29,7 +30,7 @@ class PokemonRepository extends ServiceEntityRepository
             //On exécute la requêtre.
             ->getQuery();
         // On recupère les données de la requête.
-        $pokemons = $query->getArrayResult();
+        $pokemons = $query->getResult();
         // On retourne la tableau.
         return $pokemons;
     }

@@ -7,6 +7,7 @@ namespace App\Controller;
 // On appelle le namespace des class utilisées afin que Symfony fasse le require de ces dernières.
 
 use App\Repository\PokemonRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -163,7 +164,7 @@ public function showPokemonById(int$id,PokemonRepository $pokemonRepository ): R
 public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonRepository ): Response{
         $pokemonFound= [];
     if($request->request->has('title')){
-        // je recupère les donnérs poste du title dans search
+        // je recupère les données post du title dans search
             $search = $request->request->get('title');
 
         //je stock dans la variable $pokemonFound la recherche de l'utiliateur si Pokemon existant dans la bdd.
@@ -204,4 +205,25 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
         ]);
     }
 
+    #[Route('/delete-pokemon-bdd/{id}', name: 'delete_pokemon_bdd')]
+    public function deletePokemon(int $id,PokemonRepository $pokemonRepository, EntityManagerInterface $entityManager):Response
+    {
+        $pokemon = $pokemonRepository->find($id);
+        if($pokemon === null){
+            $html = $this->renderView('page/pokemon_not_found.html.twig');
+            return new Response($html,404);
+        }
+
+        //j'utilise la classe entity manager
+        //pour préparer la requête SQL de suppression
+        //cette requête n'est pas executé tout de suite
+
+        $entityManager->remove($pokemon);
+        //flush -> exécute la requête
+        $entityManager->flush();
+
+        return $this->redirectToRoute('pokemon_bdd');
+    }
+
+    
 }
