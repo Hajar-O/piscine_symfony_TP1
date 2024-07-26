@@ -161,8 +161,7 @@ public function showPokemonById(int$id,PokemonRepository $pokemonRepository ): R
 
 #[Route('/found-pokemon-bdd', name: 'found_pokemon_bdd')]
 public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonRepository ): Response{
-        $pokemonFound=null;
-
+        $pokemonFound= [];
     if($request->request->has('title')){
         // je recupère les donnérs poste du title dans search
             $search = $request->request->get('title');
@@ -182,6 +181,27 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
             'pokemon' => $pokemonFound
         ]);
 }
+    #[Route('/found-like-pokemon-bdd', name: 'found_like_pokemon_bdd')]
+    public function findLikeTitle(Request $request,PokemonRepository $pokemonRepository ): Response{
+        $pokemonsFound=null;
+        if($request->request->has('title')){
+            // je recupère les donnérs poste du title dans search
+            $search = $request->request->get('title');
 
+            //je stock dans la variable $pokemonFound la recherche de l'utiliateur si Pokemon existant dans la bdd.
+            $pokemonsFound = $pokemonRepository->findLikeTitle($search);
+            // si pas de pokemon dans $pokemonFound alors je génère une page 404 à la main.
+
+            if(!$pokemonsFound){
+                $html = $this->renderView('page/pokemon_not_found.html.twig');
+                return new Response($html,404);
+            }
+
+        }
+
+        return $this->render('page/found_like_pokemon_bdd.html.twig', [
+            'pokemons' => $pokemonsFound
+        ]);
+    }
 
 }

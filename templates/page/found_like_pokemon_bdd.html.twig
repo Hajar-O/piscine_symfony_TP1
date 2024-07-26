@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block meta_title %}
+    Pokemon
+{% endblock meta_title %}
+{% block content %}
+
+    <article class="show_art">
+        <h1>Rechercher un Pokemon</h1>
+
+        <form method="POST">
+            <label>
+                Nom
+                <input type="text" name="title">
+            </label>
+            <input type="submit">
+        </form>
+
+    </article>
+    {% for pokemon in pokemons %}
+
+    <article class="show_art">
+        <h1 class="h1_pokemon">{{ pokemon.title }}</h1>
+        <p>{{ pokemon.description }}</p>
+        <p>{{ pokemon.type }}</p>
+
+
+        <div class="img_poke">
+            <img src="{{ pokemon.image }}" alt="">
+        </div>
+
+
+    </article>
+{% endfor %}
+
+{% endblock %}
