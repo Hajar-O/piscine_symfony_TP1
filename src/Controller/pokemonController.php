@@ -6,6 +6,7 @@ namespace App\Controller;
 
 // On appelle le namespace des class utilisées afin que Symfony fasse le require de ces dernières.
 
+use App\Entity\Pokemon;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;use Symfony\Component\HttpFoundation\Request;
@@ -225,5 +226,19 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
         return $this->redirectToRoute('pokemon_bdd');
     }
 
+#[Route('/insert-pokemon-bdd', name: 'insert_pokemon_bdd')]
+public function insertPokemon(EntityManagerInterface $entityManager){
+        $pokemon = new Pokemon('Evoli','Évoli est un Pokémon mammalien quadrupède, entre canin et félin, avec une fourrure principalement brune. Le bout de sa queue broussailleuse et son gros col de fourrure sont de couleur crème.','normal','https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/133.png');
+       /* $pokemon->setTitle('Evoli');
+        $pokemon->setDescrition('Évoli est un Pokémon mammalien quadrupède, entre canin et félin, avec une fourrure principalement brune. Le bout de sa queue broussailleuse et son gros col de fourrure sont de couleur crème.');
+        $pokemon->setType('Normal');
+        $pokemon->setImage('https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/133.png');*/
+        $entityManager->persist($pokemon);
+        $entityManager->flush();
+
+     return $this->render('page/insert_pokemon_without_form.html.twig', [
+         'pokemon' => $pokemon
+     ]);
+}
     
 }
