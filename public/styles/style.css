@@ -141,6 +141,23 @@ img{
     }
 
 }
+/*-----------MAIN-insert_article------*/
+.form_insert{
+    background-color: #b47471;
+    width: 40%;
+    margin: auto;
+    padding: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    form{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+}
+
 /*-----------MAIN-Category------*/
 
 #h3Category{
