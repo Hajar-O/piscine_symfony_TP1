@@ -227,16 +227,40 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
     }
 
 #[Route('/insert-pokemon-bdd', name: 'insert_pokemon_bdd')]
-public function insertPokemon(EntityManagerInterface $entityManager){
-        $pokemon = new Pokemon('Evoli','Évoli est un Pokémon mammalien quadrupède, entre canin et félin, avec une fourrure principalement brune. Le bout de sa queue broussailleuse et son gros col de fourrure sont de couleur crème.','normal','https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/133.png');
-       /* $pokemon->setTitle('Evoli');
-        $pokemon->setDescrition('Évoli est un Pokémon mammalien quadrupède, entre canin et félin, avec une fourrure principalement brune. Le bout de sa queue broussailleuse et son gros col de fourrure sont de couleur crème.');
-        $pokemon->setType('Normal');
-        $pokemon->setImage('https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/133.png');*/
-        $entityManager->persist($pokemon);
-        $entityManager->flush();
+public function insertPokemon(EntityManagerInterface $entityManager, Request $request){
 
-     return $this->render('page/insert_pokemon_without_form.html.twig', [
+
+        // J'initialise la variable $pokemon à null
+        // pour l'utiliser en dehors de la condition
+
+        $pokemon = null;
+        // si le method est du post
+        if($request->getMethod()=== 'POST') {
+
+            // je récupère les données du formulaire
+
+            $title= $request->request->get('title');
+            $description = $request->request->get('description');
+            $type = $request->request->get('type');
+            $image = $request->request->get('image');
+
+            //j'instencie la class pokemon
+
+            $pokemon = new Pokemon();
+
+            // Je passe en paramètre les valeurs
+            $pokemon->setTitle($title);
+            $pokemon->setDescription( $description);
+            $pokemon->setImage($image);
+            $pokemon->setType($type);
+
+            //j'enregistre les valeurs dans la bdd
+            $entityManager->persist($pokemon);
+            $entityManager->flush();
+        }
+
+        // je retourne un réponse.
+        return $this->render('page/insert_pokemon_without_form.html.twig', [
          'pokemon' => $pokemon
      ]);
 }

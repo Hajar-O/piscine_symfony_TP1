@@ -6,11 +6,33 @@
 
 {% endblock %}
 
-
-
-
 {% block content %}
 
-    <p>Le pokemon {{ pokemon.title }} a bien créé ! </p>
+    <div class="show_art">
+        <form method="POST">
+            <label>
+                Title
+                <input type="text" name="title">
+            </label>
+            <label>
+                Description
+                <input type="text" name="description">
+            </label>
+            <label>
+                Type
+                <input type="text" name="type">
+            </label>
+            <label>
+                Image
+                <input type="text" name="image">
+            </label>
+            <input type="submit">
+        </form>
+    </div>
 
+
+
+    {% if pokemon %}
+        <p>Le pokemon {{ pokemon.title }} a bien créé ! </p>
+    {% endif %}
 {% endblock %}
