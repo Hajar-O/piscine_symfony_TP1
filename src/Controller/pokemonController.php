@@ -7,6 +7,7 @@ namespace App\Controller;
 // On appelle le namespace des class utilisées afin que Symfony fasse le require de ces dernières.
 
 use App\Entity\Pokemon;
+use App\Form\PokemonBuilderType;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;use Symfony\Component\HttpFoundation\Request;
@@ -206,9 +207,9 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
         ]);
     }
 
-    #[Route('/delete-pokemon-bdd/{id}', name: 'delete_pokemon_bdd')]
-    public function deletePokemon(int $id,PokemonRepository $pokemonRepository, EntityManagerInterface $entityManager):Response
-    {
+        #[Route('/delete-pokemon-bdd/{id}', name: 'delete_pokemon_bdd')]
+        public function deletePokemon(int $id,PokemonRepository $pokemonRepository, EntityManagerInterface $entityManager):Response
+        {
         $pokemon = $pokemonRepository->find($id);
         if($pokemon === null){
             $html = $this->renderView('page/pokemon_not_found.html.twig');
@@ -226,8 +227,8 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
         return $this->redirectToRoute('pokemon_bdd');
     }
 
-#[Route('/insert-pokemon-bdd', name: 'insert_pokemon_bdd')]
-public function insertPokemon(EntityManagerInterface $entityManager, Request $request){
+    #[Route('/insert-pokemon-bdd', name: 'insert_pokemon_bdd')]
+    public function insertPokemon(EntityManagerInterface $entityManager, Request $request){
 
 
         // J'initialise la variable $pokemon à null
@@ -264,5 +265,33 @@ public function insertPokemon(EntityManagerInterface $entityManager, Request $re
          'pokemon' => $pokemon
      ]);
 }
+
+    #[Route('/insert-pokemon-builder', name: 'insert_pokemon_builder')]
+    public function insertFromBuilder(Request $request, EntityManagerInterface $entityManager){
+    // on a créé une classe de "gabarit de formulaire HTML" avec php bin/console make:form
+
+    // je créé une instance de la classe d'entité Pokemon
+    $pokemon = new Pokemon();
+
+    // permet de générer une instance de la classe de gabarit de formulaire
+    // et de la lier avec l'instance de l'entité
+    $pokemonForm = $this->createForm(PokemonBuilderType::class, $pokemon);
+
+    // lie le formulaire avec la requête
+    $pokemonForm->handleRequest($request);
+
+
+    // si le formulaire a été envoyé et que ces données
+    // sont correctes
+    if ($pokemonForm->isSubmitted() && $pokemonForm->isValid()) {
+        $entityManager->persist($pokemon);
+        $entityManager->flush();
+    }
+
+    return $this->render('page/insert_from_builder.html.twig', [
+        'pokemonForm' => $pokemonForm->createView()
+    ]);
+}
+
     
 }
