@@ -16,7 +16,8 @@ class PokemonBuilderType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('image')
-            ->add('type',SubmitType::class)
+            ->add('type')
+            ->add('submit', SubmitType::class)
         ;
     }
 

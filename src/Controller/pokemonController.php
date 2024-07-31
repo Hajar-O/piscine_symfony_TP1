@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 class pokemonController extends AbstractController {
 
 #[Route('/show-pokemon', name: 'show_pokemon')]
@@ -267,31 +268,56 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
 }
 
     #[Route('/insert-pokemon-builder', name: 'insert_pokemon_builder')]
-    public function insertFromBuilder(Request $request, EntityManagerInterface $entityManager){
-    // on a créé une classe de "gabarit de formulaire HTML" avec php bin/console make:form
+        public function insertFromBuilder(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator){
+            // on a créé une classe de "gabarit de formulaire HTML" avec php bin/console make:form
 
-    // je créé une instance de la classe d'entité Pokemon
-    $pokemon = new Pokemon();
+            // je créé une instance de la classe d'entité Pokemon
+            $pokemon = new Pokemon();
 
-    // permet de générer une instance de la classe de gabarit de formulaire
-    // et de la lier avec l'instance de l'entité
-    $pokemonForm = $this->createForm(PokemonBuilderType::class, $pokemon);
+            // permet de générer une instance de la classe de gabarit de formulaire
+            // et de la lier avec l'instance de l'entité
+            $pokemonForm = $this->createForm(PokemonBuilderType::class, $pokemon);
 
-    // lie le formulaire avec la requête
-    $pokemonForm->handleRequest($request);
+            // lie le formulaire avec la requête
+            $pokemonForm->handleRequest($request);
 
 
-    // si le formulaire a été envoyé et que ces données
-    // sont correctes
-    if ($pokemonForm->isSubmitted() && $pokemonForm->isValid()) {
-        $entityManager->persist($pokemon);
-        $entityManager->flush();
+            // si le formulaire a été envoyé et que ces données
+            // sont correctes
+            if ($pokemonForm->isSubmitted() && $pokemonForm->isValid()) {
+                $entityManager->persist($pokemon);
+                $entityManager->flush();
+            }
+
+            return $this->render('page/insert_from_builder.html.twig', [
+                'pokemonForm' => $pokemonForm->createView()
+            ]);
     }
 
-    return $this->render('page/insert_from_builder.html.twig', [
-        'pokemonForm' => $pokemonForm->createView()
-    ]);
-}
+    #[Route('/update-pokemon-bdd/{id}', name: 'update_pokemon_bdd')]
+        public function updatePokemon(int $id, PokemonRepository $pokemonRepository, EntityManagerInterface $entityManager,Request $request ){
 
+        // je récupère par l'id un pokemon
+            $pokemon = $pokemonRepository->find($id);
+
+            //dd($pokemon);
+
+        // je génére une instance de la classe de gabarit de formulaire
+        //  et la lie avec l'instance de l'entité
+            $pokemonUpdateForm = $this->createForm(PokemonBuilderType::class, $pokemon);
+
+            // je lie le formulaire avec la requête
+            $pokemonUpdateForm->handleRequest($request);
+
+        // si le formulaire a été envoyé et que ces données sont correctes
+            if($pokemonUpdateForm->isSubmitted() && $pokemonUpdateForm->isValid()){
+                $entityManager->persist($pokemon);
+                $entityManager->flush();
+            }
+
+            return $this->render('page/update_pokemon_form.html.twig', [
+                'pokemonUpdateForm' => $pokemonUpdateForm->createView()
+            ]);
+    }
     
 }
