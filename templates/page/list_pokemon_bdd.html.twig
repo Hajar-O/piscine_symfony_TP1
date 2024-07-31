@@ -16,8 +16,12 @@
             <div class="img_poke">
                 <img src="{{ pokemon.image }}" alt="">
             </div>
-            <a href="{{ path("show_pokemon_bdd",{id: pokemon.id}) }}">Voir le detail</a>
-            <a href="{{ path("delete_pokemon_bdd",{id: pokemon.id}) }}">Supprimer le pokemon</a>
+            <div class="crud_pokemon">
+                <a href="{{ path("show_pokemon_bdd",{id: pokemon.id}) }}">Voir le detail</a>
+                <a href="{{ path("delete_pokemon_bdd",{id: pokemon.id}) }}">Supprimer le pokemon</a>
+                <a href="{{ path("update_pokemon_bdd",{id: pokemon.id}) }}">Modifier le pokemon</a>
+            </div>
+
         </article>
 
     {% endfor %}

@@ -313,6 +313,8 @@ public function showFoundPokemonBdd(Request $request,PokemonRepository $pokemonR
             if($pokemonUpdateForm->isSubmitted() && $pokemonUpdateForm->isValid()){
                 $entityManager->persist($pokemon);
                 $entityManager->flush();
+
+                return $this->redirectToRoute('pokemon_bdd');
             }
 
             return $this->render('page/update_pokemon_form.html.twig', [

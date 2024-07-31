@@ -157,6 +157,15 @@ img{
         align-items: center;
     }
 }
+/*-----------MAIN-update_article------*/
+
+.myArticle{
+    .crud_pokemon{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
 
 /*-----------MAIN-Category------*/
 

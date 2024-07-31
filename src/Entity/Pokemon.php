@@ -14,7 +14,7 @@ class Pokemon
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\Length(['min' => 5])]
     private ?string $title = null;
 
